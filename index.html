@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hogwarts — 360° Viewer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Loading screen -->
+    <div id="loader">
+      <div class="loader-inner">
+        <div class="loader-crest">⚡</div>
+        <div class="loader-title">Hogwarts</div>
+        <div class="loader-bar-wrap">
+          <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <div class="loader-text">Loading the wizarding world...</div>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="ui">
+      <!-- Top left title -->
+      <div class="ui-title">
+        <span class="ui-title-sub">360° Experience</span>
+        <span class="ui-title-main">The Battle of Hogwarts</span>
+      </div>
+
+      <!-- Bottom hint -->
+      <div class="ui-hint" id="hint">
+        <span class="hint-icon">✦</span>
+        <span id="hintText">Drag to explore · Scroll to zoom</span>
+      </div>
+
+      <!-- Controls -->
+      <div class="ui-controls">
+        <button class="ctrl-btn" id="btnAutoRotate" title="Toggle auto-rotate">
+          ⟳
+        </button>
+        <button class="ctrl-btn" id="btnReset" title="Reset view">⌖</button>
+        <button class="ctrl-btn" id="btnFullscreen" title="Fullscreen">⛶</button>
+      </div>
+
+      <!-- Compass -->
+      <div class="ui-compass">
+        <div class="compass-ring" id="compassRing">
+          <span class="compass-n">N</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Particle canvas -->
+    <canvas id="particles"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="viewer.js"></script>
+  </body>
+</html>
