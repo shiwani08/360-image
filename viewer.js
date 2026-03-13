@@ -8,7 +8,7 @@
 
   // ── Config ─────────────────────────────────────────────────
   const CONFIG = {
-    imagePath: "images/gattani.jpeg",
+    imagePath: "images/kitchen.jpg",
     sphereRadius: 500,
     fovDefault: 75,
     fovMin: 30,
