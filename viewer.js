@@ -8,7 +8,7 @@
 
   // ── Config ─────────────────────────────────────────────────
   const CONFIG = {
-    imagePath: "images/84314.jpg",
+    imagePath: "images/plywood.png",
     sphereRadius: 500,
     fovDefault: 75,
     fovMin: 30,
@@ -44,7 +44,6 @@
   const btnReset    = document.getElementById("btnReset");
   const btnFull     = document.getElementById("btnFullscreen");
   const compassRing = document.getElementById("compassRing");
-  const pCanvas     = document.getElementById("particles");
 
   // ── Three.js setup ──────────────────────────────────────────
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -135,75 +134,6 @@
     camera.updateProjectionMatrix();
   }
 
-  // ── Ember particle system (setup runs ONCE) ──────────────────
-  const pCtx      = pCanvas.getContext("2d");
-  const particles = [];
-
-  function resizeParticleCanvas() {
-    pCanvas.width  = window.innerWidth;
-    pCanvas.height = window.innerHeight;
-  }
-  resizeParticleCanvas();
-  window.addEventListener("resize", resizeParticleCanvas);
-
-  class Particle {
-    constructor() {
-      this.reset(true);
-    }
-
-    reset(initial = false) {
-      // Spawn near top-right area (where fire is in the image)
-      this.x     = window.innerWidth * (0.45 + Math.random() * 0.4);
-      this.y     = initial
-        ? Math.random() * window.innerHeight
-        : window.innerHeight * (0.1 + Math.random() * 0.5);
-      this.vx    = (Math.random() - 0.5) * 0.8;
-      this.vy    = -(0.6 + Math.random() * 1.4); // float upward
-      this.size  = 1 + Math.random() * 2.5;
-      this.life  = 1;
-      this.decay = 0.004 + Math.random() * 0.006;
-      // ember colours: orange → gold → white
-      const r    = Math.floor(220 + Math.random() * 35);
-      const g    = Math.floor(60  + Math.random() * 120);
-      this.color = `rgb(${r},${g},10)`;
-    }
-
-    update() {
-      this.x    += this.vx;
-      this.y    += this.vy;
-      this.vy   -= 0.01;                       // slight acceleration upward
-      this.vx   += (Math.random() - 0.5) * 0.08; // flicker
-      this.life -= this.decay;
-      if (this.life <= 0) this.reset();
-    }
-
-    draw() {
-      pCtx.save();
-      pCtx.globalAlpha = this.life * 0.7;
-      pCtx.fillStyle   = this.color;
-      pCtx.shadowBlur  = 6;
-      pCtx.shadowColor = this.color;
-      pCtx.beginPath();
-      pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      pCtx.fill();
-      pCtx.restore();
-    }
-  }
-
-  // Spawn all particles once
-  for (let i = 0; i < 120; i++) {
-    particles.push(new Particle());
-  }
-
-  // Called every frame — only updates and draws, never creates
-  function updateParticles() {
-    pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-    particles.forEach((p) => {
-      p.update();
-      p.draw();
-    });
-  }
-
   // ── Animation loop ──────────────────────────────────────────
   function animate() {
     requestAnimationFrame(animate);
@@ -222,7 +152,6 @@
 
     updateCamera();
     updateFov();
-    updateParticles();
     renderer.render(scene, camera);
   }
 
