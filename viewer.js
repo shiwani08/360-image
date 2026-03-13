@@ -13,6 +13,7 @@
     fovDefault: 75,
     fovMin: 30,
     fovMax: 100,
+    zoomStep: 10,            // FOV change per button click
     autoRotateSpeed: 0.08,   // degrees per frame
     dragSensitivity: 0.25,
     inertiaDamping: 0.92,
@@ -43,6 +44,8 @@
   const btnAutoRot  = document.getElementById("btnAutoRotate");
   const btnReset    = document.getElementById("btnReset");
   const btnFull     = document.getElementById("btnFullscreen");
+  const btnZoomIn   = document.getElementById("btnZoomIn");
+  const btnZoomOut  = document.getElementById("btnZoomOut");
   const compassRing = document.getElementById("compassRing");
 
   // ── Three.js setup ──────────────────────────────────────────
@@ -243,6 +246,17 @@
     state.targetFov = CONFIG.fovDefault;
     state.velocityX = 0;
     state.velocityY = 0;
+  });
+
+  // ── Zoom buttons ─────────────────────────────────────────────
+  // Zoom in = smaller FOV (narrow field = things look bigger)
+  // Zoom out = larger FOV (wide field = things look smaller)
+  btnZoomIn.addEventListener("click", () => {
+    state.targetFov = Math.max(CONFIG.fovMin, state.targetFov - CONFIG.zoomStep);
+  });
+
+  btnZoomOut.addEventListener("click", () => {
+    state.targetFov = Math.min(CONFIG.fovMax, state.targetFov + CONFIG.zoomStep);
   });
 
   btnFull.addEventListener("click", () => {
